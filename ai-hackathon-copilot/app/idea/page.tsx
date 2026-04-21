@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Input, Select } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { AI_MODELS } from '@/lib/minimax';
 import type { Idea } from '@/types';
 
 export default function IdeaGenerator() {
   const router = useRouter();
   const [domain, setDomain] = useState('');
   const [customPrompt, setCustomPrompt] = useState('');
+  const [model, setModel] = useState('nvidia/nemotron-nano-12b-v2-vl:free');
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export default function IdeaGenerator() {
       const res = await fetch('/api/idea', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ domain, customPrompt: customPrompt || undefined }),
+        body: JSON.stringify({ domain, customPrompt: customPrompt || undefined, model }),
       });
       const data = await res.json();
       if (data.ideas) {
@@ -61,6 +63,13 @@ export default function IdeaGenerator() {
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
           />
+          <div className="flex gap-2">
+            <Select value={model} onChange={(e) => setModel(e.target.value)}>
+              {AI_MODELS.map((m) => (
+                <option key={m.id} value={m.id}>{m.name}</option>
+              ))}
+            </Select>
+          </div>
           <Textarea
             placeholder="Custom prompt (optional)"
             value={customPrompt}

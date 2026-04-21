@@ -4,6 +4,8 @@ import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select } from '@/components/ui/input';
+import { AI_MODELS } from '@/lib/minimax';
 
 function StructureContent() {
   const router = useRouter();
@@ -15,6 +17,7 @@ function StructureContent() {
   const usefulness = searchParams.get('usefulness') || '';
 
   const [customPrompt, setCustomPrompt] = useState('');
+  const [model, setModel] = useState('nvidia/nemotron-nano-12b-v2-vl:free');
   const [structure, setStructure] = useState<{
     problem_statement: string;
     features: string[];
@@ -33,6 +36,7 @@ function StructureContent() {
           idea: { title, problem, usefulness },
           domain,
           customPrompt: customPrompt || undefined,
+          model,
         }),
       });
       const data = await res.json();
@@ -81,6 +85,11 @@ function StructureContent() {
           <CardTitle>Custom Prompt (Optional)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <Select value={model} onChange={(e) => setModel(e.target.value)}>
+            {AI_MODELS.map((m) => (
+              <option key={m.id} value={m.id}>{m.name}</option>
+            ))}
+          </Select>
           <textarea
             className="w-full p-2 border rounded"
             placeholder="Edit the prompt if needed..."

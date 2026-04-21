@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/input';
+import { AI_MODELS } from '@/lib/minimax';
 
 function PitchContent() {
   const router = useRouter();
@@ -20,6 +22,7 @@ function PitchContent() {
   const roadmap = JSON.parse(searchParams.get('roadmap') || '[]');
 
   const [customPrompt, setCustomPrompt] = useState('');
+  const [model, setModel] = useState('nvidia/nemotron-nano-12b-v2-vl:free');
   const [pitchScript, setPitchScript] = useState('');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -38,6 +41,7 @@ function PitchContent() {
             tech_stack,
           },
           customPrompt: customPrompt || undefined,
+          model,
         }),
       });
       const data = await res.json();
@@ -99,6 +103,11 @@ function PitchContent() {
           <CardTitle>Custom Prompt (Optional)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <Select value={model} onChange={(e) => setModel(e.target.value)}>
+            {AI_MODELS.map((m) => (
+              <option key={m.id} value={m.id}>{m.name}</option>
+            ))}
+          </Select>
           <Textarea
             placeholder="Edit the prompt if needed..."
             value={customPrompt}

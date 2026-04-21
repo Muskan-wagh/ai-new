@@ -5,7 +5,7 @@ import { DEFAULT_IDEA_PROMPT } from '@/lib/prompts';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { domain, customPrompt } = body;
+    const { domain, customPrompt, model } = body;
 
     if (!domain) {
       return NextResponse.json(
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const response = await callMinimax([
       { role: 'system', content: 'You are a helpful AI assistant.' },
       { role: 'user', content: userMessage },
-    ]);
+    ], model);
 
     let ideas;
     try {

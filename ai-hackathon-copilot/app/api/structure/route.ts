@@ -19,7 +19,7 @@ function parseJsonResponse(response: string) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { idea, domain, customPrompt } = body;
+    const { idea, domain, customPrompt, model } = body;
 
     if (!idea || !domain) {
       return NextResponse.json(
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     const response = await callMinimax([
       { role: 'system', content: 'You are a helpful AI assistant.' },
       { role: 'user', content: userMessage },
-    ]);
+    ], model);
 
     let structure = parseJsonResponse(response);
     if (!structure) {
