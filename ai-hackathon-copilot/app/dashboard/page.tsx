@@ -146,10 +146,10 @@ export default function DashboardPage() {
                       )}
                     </div>
 
-                    <button className="w-full py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
+                    <Link href={`/dashboard/${project.id}`} className="w-full py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
                       View Details
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}

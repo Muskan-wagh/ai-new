@@ -18,10 +18,7 @@ export function Navigation() {
 
         <div className="hidden md:flex items-center gap-8">
           <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Dashboard</Link>
-          <Link href="#" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Features</Link>
-          <Link href="#" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">How it Works</Link>
-          <Link href="#" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Docs</Link>
-          <Link href="#" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Pricing</Link>
+          <Link href="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">How it Works</Link>
         </div>
 
         <div className="flex items-center gap-4">
