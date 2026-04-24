@@ -1,4 +1,4 @@
-# SPRINT - AI Hackathon Co-Pilot
+# Structify - AI Hackathon Co-Pilot
 
 AI Hackathon Co-Pilot is a web application that helps students go from idea to structured project plan and pitch during hackathons.
 
